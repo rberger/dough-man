@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "doughman"
+version = "0.1.0"
+description = ""
+authors = ["Robert J. Berger <rberger@ibd.com>"]
+readme = "README.md"
+packages = [{include = "doughman", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+vl53_400_lib = "0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
