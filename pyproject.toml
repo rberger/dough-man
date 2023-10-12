@@ -8,7 +8,9 @@ packages = [{include = "doughman", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-vl53_400_lib = "0.1"
+# vl53_400_lib = "^0.1"
+vl53_400_Lib = { path = "../lidar/vl53_400_lib/", develop = true }
+click = "^8.1.7"
 
 
 [build-system]
