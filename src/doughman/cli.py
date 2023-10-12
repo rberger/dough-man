@@ -8,7 +8,7 @@ from loguru import logger
 @click.command()
 @click.option(
     "--serial-port",
-    default="/dev/tty.usbserial-910",
+    default="/dev/tty.usbserial-A10",
     help="The serial port to connect to.",
 )
 @click.option("--baud-rate", default=115200, help="The baud rate to use.")
@@ -52,7 +52,10 @@ def cli(
     logger.debug(
         f"cli: {serial_port}, baud_rate: {baud_rate} timeout: {timeout} return_rate: {return_rate} debug: {debug}"
     )
-    range_finder = RangeFinder(serial_port, baud_rate, timeout, return_rate, debug)
+    try:
+        range_finder = RangeFinder(serial_port, baud_rate, timeout, return_rate, debug)
+    except Exception as e:
+        exit_with_msg(f"Error initializing RangeFinder: {e}")
 
     op = "set_return_rate" if return_rate else op
     op = "mode" if mode else op
@@ -71,6 +74,11 @@ def cli(
             range_finder.set_return_rate(return_rate)
         case _:
             exit_with_msg("No operation specified. Exiting.")
+
+
+def exit_with_msg(msg: str) -> None:
+    logger.error(msg)
+    sys.exit(1)
 
 
 if __name__ == "__main__":
