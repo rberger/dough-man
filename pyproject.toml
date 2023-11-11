@@ -7,14 +7,20 @@ readme = "README.md"
 packages = [{include = "doughman", from = "src"}]
 
 [tool.poetry.scripts]
-doughman = "doughman:cli.cli"
+#doughman = "doughman:cli.cli"
+doughman = "doughman:tui.tui_run"
 
 [tool.poetry.dependencies]
 python = "^3.11"
 # vl53_400_lib = "^0.1"
 vl53_400_Lib = { path = "../lidar/vl53_400_lib/", develop = true }
 click = "^8.1.7"
+textual = "^0.41"
+pyserial = "^3.5"
+pyserial-asyncio = "^0.6"
 
+[tool.poetry.group.dev.dependencies]
+textual-dev = "*"
 
 [build-system]
 requires = ["poetry-core"]
