@@ -35,32 +35,6 @@ class RiseDisplay(Static):
         self.update(line_output)
 
 
-class SerialDisplay(Static):
-    line_output = reactive("")
-
-    def __init__(self, serial_port, baud_rate, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.serial_port = serial_port
-        self.baud_rate = baud_rate
-        self.serial_conn = None
-
-    async def on_mount(self):
-        print("on_mount")
-        self.serial_conn = await open_serial_connection(url=self.serial_port, baudrate=self.baud_rate)
-        print("serial_conn", self.serial_conn)
-        asyncio.create_task(self.update_line_output())
-
-    async def update_line_output(self):
-        reader, _ = self.serial_conn
-        self.update("Waiting for data...")
-        while True:
-            line = await reader.readline()
-            self.line_output = line.decode("utf-8").rstrip()
-
-    def watch_line_output(self, line_output: str) -> None:
-        self.update(line_output)
-
-
 class SerialConfigScreen(Static):
     """
     A modal screen that allows user to pick the serial port
